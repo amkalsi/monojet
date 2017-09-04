@@ -12,12 +12,13 @@ void monotop_analysis::Begin(TTree * /*tree*/) {
 void monotop_analysis::SlaveBegin(TTree * /*tree*/) {
   TString option = GetOption();
 
-  // Make Canvases.
+  // Make Canvas.
   TCanvas *c1 = new TCanvas("c1", "plots", 1200, 700);
+  // Divide the canvas into 4 pads.
   c1->Divide(2,2);
 
   // Define histograms.
-  // m_jjb
+  // m(j,j,b)
   h_mass = new TH1F("M", "dijet + b Mass", 100, 90., 700.);
   h_mass->GetXaxis()->SetTitle("M_jjb (GeV/c^2)");
   h_mass->GetYaxis()->SetTitle("Nb events");
@@ -55,13 +56,13 @@ Bool_t monotop_analysis::Process(Long64_t entry) {
 
       if (Jet_BTag[i] == 0 && jet1_i < 0) {
         jet1_i = i;
-        //printf("jet1 found as index %d \n", i);
+        // printf("jet1 found as index %d \n", i);
         continue;
       }
 
       if (Jet_BTag[i] == 0 && jet1_i >= 0 && jet2_i < 0) {
         jet2_i = i;
-        //printf("jet2 found as index %d \n", i);
+        // printf("jet2 found as index %d \n", i);
       }
     }
 
@@ -70,6 +71,8 @@ Bool_t monotop_analysis::Process(Long64_t entry) {
       btag.SetPtEtaPhiM(Jet_PT[btag_i], Jet_Eta[btag_i], Jet_Phi[btag_i], Jet_Mass[btag_i]);
       jet1.SetPtEtaPhiM(Jet_PT[jet1_i], Jet_Eta[jet1_i], Jet_Phi[jet1_i], Jet_Mass[jet1_i]);
       jet2.SetPtEtaPhiM(Jet_PT[jet2_i], Jet_Eta[jet2_i], Jet_Phi[jet2_i], Jet_Mass[jet2_i]);
+    } else {
+      break; // Only make vectors and fill the histogram if all 3 jets are found.
     }
 
     TLorentzVector multijet = btag + jet1 + jet2;
