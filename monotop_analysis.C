@@ -19,17 +19,17 @@ void monotop_analysis::SlaveBegin(TTree * /*tree*/) {
 
   // Define histograms.
   // m(j,j,b)
-  h_mass = new TH1F("M", "dijet + b Mass", 100, 90., 700.);
+  h_mass = new TH1F("M", "dijet + b Mass", 100, 0., 700.);
   h_mass->GetXaxis()->SetTitle("M_jjb (GeV/c^2)");
   h_mass->GetYaxis()->SetTitle("Nb events");
 
   // jet_energy
-  h_energy = new TH1F("E", "dijet + b Energy", 100, 100., 1500.);
+  h_energy = new TH1F("E", "dijet + b Energy", 100, 0., 1500.);
   h_energy->GetXaxis()->SetTitle("E_jjb (GeV)");
   h_energy->GetYaxis()->SetTitle("Nb events");
 
   // jet_pt
-  h_pt = new TH1F("PT", "dijet + b Pt", 100, 25., 550.);
+  h_pt = new TH1F("PT", "dijet + b Pt", 100, 0., 550.);
   h_pt->GetXaxis()->SetTitle("PT_jjb (GeV/c)");
   h_pt->GetYaxis()->SetTitle("Nb events");
 }
