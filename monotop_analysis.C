@@ -5,13 +5,7 @@
 #include <TStyle.h>
 #include <TParticle.h>
 
-
 // Declare histograms.
-TH1F *h_mass;
-TH1F *h_energy;
-TH1F *h_pt;
-TH1F *h_energy_ratio;
-TH1F *h_met_pt;
 TH1F *h_pt_ratio;
 
 void monotop_analysis::Begin(TTree * /*tree*/) {
@@ -21,40 +15,9 @@ void monotop_analysis::Begin(TTree * /*tree*/) {
 void monotop_analysis::SlaveBegin(TTree * /*tree*/) {
   TString option = GetOption();
 
-  // Make Canvases.
-  TCanvas *c1 = new TCanvas("c1", "plots", 1200, 700);
-  c1->Divide(2,2);
-  TCanvas *c2 = new TCanvas("c2", "Pt ratio plot", 800, 700);
-
-  // Define histograms.
-  // m_jjb
-  h_mass = new TH1F("M", "dijet + b Mass", 100, 0., 700.);
-  h_mass->GetXaxis()->SetTitle("M_jjb (GeV/c^2)");
-  h_mass->GetYaxis()->SetTitle("Nb events");
-
-  // jet_energy
-  h_energy = new TH1F("E", "dijet + b Energy", 100, 0., 1500.);
-  h_energy->GetXaxis()->SetTitle("E_jjb (GeV)");
-  h_energy->GetYaxis()->SetTitle("Nb events");
-
-  // jet_pt
-  h_pt = new TH1F("PT", "dijet + b Pt", 100, 0., 700.);
-  h_pt->GetXaxis()->SetTitle("PT_jjb (GeV/c)");
-  h_pt->GetYaxis()->SetTitle("Nb events");
-
-  // E(b)/E(t)
-  h_energy_ratio = new TH1F("E(b)/E(t)", "E(b)/E(t)", 100, 0., 1.);
-  h_energy_ratio->GetXaxis()->SetTitle("E(b)/E(t)");
-  h_energy_ratio->GetYaxis()->SetTitle("Nb events");
-
-  // Missing ET transverse momenta.
-  h_met_pt = new TH1F("MET PT", "Missing ET Transverse Momenta", 100, 0., 700.);
-  h_met_pt->GetXaxis()->SetTitle("PT_MET (GeV/c)");
-  h_met_pt->GetYaxis()->SetTitle("Nb events");
-
   // PT ratio.
-  h_pt_ratio = new TH1F("Pt(b)/(Pt(b) + Pt(t))", "Pt(b)/(Pt(b) + Pt(t))", 100, 0., 1.);
-  h_pt_ratio->GetXaxis()->SetTitle("Pt(b)/(Pt(b) + Pt(t))");
+  h_pt_ratio = new TH1F("pt_ratio_right", "pT ratio (Leptonic W, Right-Handed)", 30, 0., 1.);
+  h_pt_ratio->GetXaxis()->SetTitle("Pt(b)/(Pt(b) + Pt(mu))");
   h_pt_ratio->GetYaxis()->SetTitle("Nb events");
 }
 
@@ -63,92 +26,61 @@ Bool_t monotop_analysis::Process(Long64_t entry) {
   GetEntry(entry);
 
   // Declare running indices.
-  Int_t	btag_i = -1;
-  Int_t	jet1_i = -1;
-  Int_t	jet2_i = -1;
+  Int_t btag_i = -1;
+  Int_t muon_i = -1;
 
-  TLorentzVector btag;
-  TLorentzVector jet1;
-  TLorentzVector jet2;
+  if (Muon_size > 0 && Jet_size > 0) {
 
-  // Begin main loop over jets.
-  if (Jet_size > 2) {
-    // ID the leading btagged jet and the 2 leading non-btagged jets.
+    // Loop over jets and find the leading b-jet.
     for (Int_t i = 0; i < Jet_size; i++) {
       if (Jet_BTag[i] == 1 && btag_i < 0) {
         btag_i = i;
-        // printf("btag found as index %d \n", i);
-        continue;
-      }
-
-      if (Jet_BTag[i] == 0 && jet1_i < 0) {
-        jet1_i = i;
-        // printf("jet1 found as index %d \n", i);
-        continue;
-      }
-
-      if (Jet_BTag[i] == 0 && jet1_i >= 0 && jet2_i < 0) {
-        jet2_i = i;
-        // printf("jet2 found as index %d \n", i);
       }
     }
 
-    // Construct TLorentzVectors for the tagged b-jet and the two leading non-b-jets.
-    if (btag_i > -1 && jet1_i > -1 && jet2_i > -1) {
-      btag.SetPtEtaPhiM(Jet_PT[btag_i], Jet_Eta[btag_i], Jet_Phi[btag_i], Jet_Mass[btag_i]);
-      jet1.SetPtEtaPhiM(Jet_PT[jet1_i], Jet_Eta[jet1_i], Jet_Phi[jet1_i], Jet_Mass[jet1_i]);
-      jet2.SetPtEtaPhiM(Jet_PT[jet2_i], Jet_Eta[jet2_i], Jet_Phi[jet2_i], Jet_Mass[jet2_i]);
-    } else {
-      break; // If we haven't ID'd all 3 jets, don't fill the histograms.
+    // Loop over muons and find the highest pT muon.
+    Double_t muon_pt_max = 0.0;
+    for (Int_t i = 0; i < Muon_size; i++) {
+      if (Muon_PT[i] > muon_pt_max) {
+        muon_i = i;
+        muon_pt_max = Muon_PT[i];
+      }
     }
 
-    TLorentzVector multijet = btag + jet1 + jet2;
+    // Sum the MET in the event for the MET cut.
 
-    // Calculate mass_j_j_b.
-    Double_t mass_j_j_b = multijet.M();
+    // Make cuts.
+    bool btag_found = (btag_i > -1);
+    if (btag_found) {
+      Float_t delta_phi, btag_pT, btag_eta, muon_pT;
 
-    // Calculate dijet + b energy (reconstructed top quark energy).
-    Double_t jet_energy = multijet.E();
+      delta_phi = abs(Muon_Phi[muon_i] - Jet_Phi[btag_i]);
+      btag_pT = Jet_PT[btag_i];
+      muon_pT = muon_pt_max;
+      btag_eta = Jet_Eta[btag_i];
 
-    // Calculate dijet + b Pt (reconstructed top Pt).
-    Double_t jet_pt = multijet.Pt();
+      bool pt_cut = (muon_pT > 33.0 && btag_pT > 70.0);
+      bool delta_phi_cut = (delta_phi < 1.7);
+      bool btag_eta_cut = (btag_eta < 2.5);
+      bool passed_cuts = (btag_cut && muon_cut && delta_phi_cut && pt_cut && btag_eta_cut);
 
-    // Calculate E(b)/E(t) energy.
-    Double_t energy_ratio = btag.E() / multijet.E();
+      // Calculate R.
+      Double_t pt_ratio = ((btag_pT) / (btag_pT + muon_pT));
 
-    // Calculate Pt(b)/[Pt(b) + Pt(t)].
-    Double_t pt_ratio = btag.Pt() / (btag.Pt() + multijet.Pt());
-
-    // Fill histograms
-    h_mass->Fill(mass_j_j_b);
-    //h_energy->Fill(jet_energy);
-    h_pt->Fill(jet_pt);
-    h_energy_ratio->Fill(energy_ratio);
-    h_pt_ratio->Fill(pt_ratio);
-  }
-
-  // Loop for Missing ET.
-  for (Int_t i = 0; i < MissingET_size; i++) {
-    h_met_pt->Fill(MissingET_MET[i]); // Assuming MET ~ PT
+      // Fill histograms if all cuts are passed.
+      if (passed_cuts) {
+        h_pt_ratio->Fill(pt_ratio);
+      }
+    }
   }
 
   return kTRUE;
 }
 
 void monotop_analysis::SlaveTerminate() {
-  c1->cd(1);
-  h_mass->Draw();
-  c1->cd(2);
-  h_energy_ratio->Draw();
-  c1->cd(3);
-  h_met_pt->Draw();
-  c1->cd(4);
-  h_pt->Draw();
-  c1->Print("monotop_delphes_plots.png");
-
-  c2->cd();
-  h_pt_ratio->Draw();
-  c2->Print("pt_ratio.png");
+  TFile *f_right = new TFile("pt_hist_right.root", "RECREATE");
+  h_pt_ratio->Write();
+  f_right->Close();
 }
 
 void monotop_analysis::Terminate() {}
