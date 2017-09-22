@@ -47,8 +47,6 @@ Bool_t monotop_analysis::Process(Long64_t entry) {
       }
     }
 
-    // Sum the MET in the event for the MET cut.
-
     // Make cuts.
     bool btag_found = (btag_i > -1);
     if (btag_found) {
