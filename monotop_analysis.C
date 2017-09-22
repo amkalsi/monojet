@@ -60,7 +60,7 @@ Bool_t monotop_analysis::Process(Long64_t entry) {
       bool pt_cut = (muon_pT > 33.0 && btag_pT > 70.0);
       bool delta_phi_cut = (delta_phi < 1.7);
       bool btag_eta_cut = (btag_eta < 2.5);
-      bool passed_cuts = (btag_cut && muon_cut && delta_phi_cut && pt_cut && btag_eta_cut);
+      bool passed_cuts = (delta_phi_cut && pt_cut && btag_eta_cut);
 
       // Calculate R.
       Double_t pt_ratio = ((btag_pT) / (btag_pT + muon_pT));
