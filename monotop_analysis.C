@@ -1,114 +1,97 @@
-#define monotop_gen_lept_cxx
-// The class definition in monotop_gen_lept.h has been generated automatically
-// by the ROOT utility TTree::MakeSelector(). This class is derived
-// from the ROOT class TSelector. For more information on the TSelector
-// framework see $ROOTSYS/README/README.SELECTOR or the ROOT User Manual.
+#define monotop_analysis_cxx
 
-// The following methods are defined in this file:
-//    Begin():        called every time a loop on the tree starts,
-//                    a convenient place to create your histograms.
-//    SlaveBegin():   called after Begin(), when on PROOF called only on the
-//                    slave servers.
-//    Process():      called for each event, in this function you decide what
-//                    to read and fill your histograms.
-//    SlaveTerminate: called at the end of the loop on the tree, when on PROOF
-//                    called only on the slave servers.
-//    Terminate():    called at the end of the loop on the tree,
-//                    a convenient place to draw/fit your histograms.
-//
-// To use this file, try the following session on your Tree T:
-//
-// Root > T->Process("monotop_gen_lept.C")
-// Root > T->Process("monotop_gen_lept.C","some options")
-// Root > T->Process("monotop_gen_lept.C+")
-//
-
-#include "monotop_gen_lept.h"
+#include "monotop_analysis.h"
 #include <TH2.h>
 #include <TStyle.h>
-#include <TParticle.h>
 
-TH1F *h_pt_ratio;
-TH2F *h_p_dist;
+// Declare histograms.
+TH1F *h_pt_ratio = new TH1F("pt_ratio_right", "", 10, 0., 1.);
+TCanvas *c = new TCanvas("c", "pt_Ratio", 800, 700);
 
-TCanvas *c1 = new TCanvas("c1", "Pt ratio plot", 800, 700);
-TCanvas *c2 = new TCanvas("c2", "Transerse and Z Momentum Distribution", 800, 700);
-
-void monotop_gen_lept::Begin(TTree * /*tree*/) {
+void monotop_analysis::Begin(TTree * /*tree*/) {
   TString option = GetOption();
 }
 
-void monotop_gen_lept::SlaveBegin(TTree * /*tree*/) {
+void monotop_analysis::SlaveBegin(TTree * /*tree*/) {
   TString option = GetOption();
 
   // PT ratio.
-  h_pt_ratio = new TH1F("pt_ratio", "Pt ratio for LH monotop, W->mu,vm", 100, 0., 1.);
   h_pt_ratio->GetXaxis()->SetTitle("Pt(b)/(Pt(b) + Pt(mu))");
   h_pt_ratio->GetYaxis()->SetTitle("Nb events");
-
-  // Px, Py, Pz distribution
-  h_p_dist = new TH2F("p_dist", "Muon Transerse and Z Momentum Distribution (LH)", 100, 0.,500.,
-                       100, 0., 500.);
-  h_p_dist->GetXaxis()->SetTitle("PT");
-  h_p_dist->GetYaxis()->SetTitle("Pz");
 }
 
-Bool_t monotop_gen_lept::Process(Long64_t entry) {
+Bool_t monotop_analysis::Process(Long64_t entry) {
   // Get each event.
   GetEntry(entry);
 
-  // P4 for the muon and the b
-  TLorentzVector b;
-  TLorentzVector mu;
+  // Declare running indices.
+  Int_t btag_i = -1;
+  Int_t muon_i = -1;
 
-  // Loop over particles.
-  Int_t b_i = 0;
-  Int_t mu_i = 0;
-  for (Int_t i = 0; i<Particle_size; i++) {
-    // Store the index of the muon.
-    if (abs(Particle_PID[i]) == 13) {
-      mu_i = i;
+  if (Muon_size > 0 && Jet_size > 0) {
+
+    // Loop over jets and find the leading b-jet.
+    for (Int_t i = 0; i < Jet_size; i++) {
+      printf("Jet size: %d ; Btag = %d \n", Jet_size, Jet_BTag[i]);
+      if (Jet_BTag[i] == 1 && btag_i < 0) {
+        btag_i = i;
+      }
     }
 
-    // Store the index of the final state b.
-    if (abs(Particle_PID[i]) == 5 && Particle_Status[i] == 1) {
-      b_i = i;
+    // Loop over muons and find the highest pT muon.
+    Double_t muon_pt_max = 0.0;
+    for (Int_t i = 0; i < Muon_size; i++) {
+      printf("Muon size: %d ; Muon PT: %d \n", Muon_size, Muon_PT[i]);
+      if (Muon_PT[i] > muon_pt_max) {
+        muon_i = i;
+        muon_pt_max = Muon_PT[i];
+      }
     }
-  }
 
-  // Construct the TLorentzVectors for the b and mu.
-  TLorentzVector b(Particle_Px[b_i], Particle_Py[b_i], Particle_Pz[b_i], Particle_E[b_i]);
-  TLorentzVector mu(Particle_Px[mu_i], Particle_Py[mu_i], Particle_Pz[mu_i], Particle_E[mu_i]);
+    Int_t sum_MissingET;
+    for (Int_t i = 0; i < MissingET_size; i++) {
+      sum_MissingET += MissingET_MET[i];
+    }
 
-  Double_t pt_ratio = b.Pt() / (b.Pt() + mu.Pt());
-  Double_t delta_phi_bl = abs(b.Phi() - mu.Phi());
-  Double_t b_eta = abs(b.Eta());
+    // Make cuts.
+    bool btag_found = (btag_i > -1);
+    if (btag_found) {
+      Double_t delta_phi, btag_pT, btag_eta, muon_eta, muon_pT;
 
-  // Make cuts.
-  bool cut_b_pt = (b.Pt() > 70.);
-  bool cut_l_pt = (mu.Pt() > 30.);
-  bool cut_delta_phi = (delta_phi_bl < 1.7);
-  bool cut_eta = (b_eta < 2.5);
-  bool passed_cuts = (cut_b_pt && cut_eta && cut_l_pt && cut_delta_phi);
+      delta_phi = abs(Muon_Phi[muon_i] - Jet_Phi[btag_i]);
+      btag_pT = Jet_PT[btag_i];
+      muon_pT = muon_pt_max;
+      btag_eta = Jet_Eta[btag_i];
+      muon_eta = Muon_Eta[muon_i];
 
-  if (passed_cuts) {
-    h_pt_ratio->Fill(pt_ratio);
-    h_p_dist->Fill(mu.Pt(), mu.Pz());
-  } else {
-    break;
+      bool pt_cut = (muon_pT > 33.0 && btag_pT > 70.0);
+      bool delta_phi_cut = (delta_phi < 1.7);
+      bool btag_eta_cut = (btag_eta < 2.5);
+      bool mu_eta_cut = (muon_eta < 2.1);
+      bool et_miss_cut = (sum_MissingET > 100.0);
+      bool passed_cuts = (delta_phi_cut && pt_cut && mu_eta_cut &&
+                          btag_eta_cut && et_miss_cut);
+
+      // Calculate R.
+      Double_t pt_ratio = ((btag_pT) / (btag_pT + muon_pT));
+
+      // Fill histograms if all cuts are passed.
+      if (passed_cuts) {
+        h_pt_ratio->Fill(pt_ratio);
+      }
+    }
   }
 
   return kTRUE;
 }
 
-void monotop_gen_lept::SlaveTerminate() {
-  c1->cd();
+void monotop_analysis::SlaveTerminate() {
+  TFile *f = new TFile("pt_hist_right.root", "RECREATE");
+  // Normalize.
+  h_pt_ratio->Scale(1/h_pt_ratio->Integral());
   h_pt_ratio->Draw();
-  c1->Print("pt_ratio_left.png");
-
-  c2->cd();
-  h_p_dist->Draw("CONT4");
-  c2->Print("p_2d_left.png");
+  h_pt_ratio->Write();
+  f->Close();
 }
 
-void monotop_gen_lept::Terminate() {}
+void monotop_analysis::Terminate() {}
