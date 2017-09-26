@@ -11,7 +11,7 @@
 // Optional: file1 legend title
 // Optional: file2 legend title
 
-void PlotOverlay(const char *file1, const char *file2) {
+void PlotOverlay(const char *file1, const char *file2, const char *title) {
   //gStyle->SetOptStat(0);
 
   TCanvas *c = new TCanvas("c", "PT ratio", 800, 700);
@@ -38,25 +38,24 @@ void PlotOverlay(const char *file1, const char *file2) {
     h2 = (TH1F*)key2->ReadObj();
   }
 
-  h1->SetTitle("pT Ratio - Pythia Handled W Decay");
+  h1->SetTitle(title);
   h1->GetXaxis()->SetTitle("Pt(b)/(Pt(b) + Pt(mu)");
   h1->GetYaxis()->SetTitle("");
-  h1->GetYaxis()->SetRangeUser(0., .2);
-  
-  h1->SetLineColorAlpha(46, 1);
-  h1->SetLineWidth(4);
-  h1->SetFillColorAlpha(46, 0.1);
+  h1->GetYaxis()->SetRangeUser(0., .4);
 
-  h2->SetLineColorAlpha(9, 1);
-  h2->SetFillColorAlpha(9, 0.1);
+  h1->SetLineColorAlpha(9, 1);
+  h1->SetLineWidth(4);
+  h1->SetFillColorAlpha(9, 0.1);
+
+  h2->SetLineColorAlpha(46, 1);
+  h2->SetFillColorAlpha(46, 0.1);
   h2->SetLineWidth(4);
 
   h1->Draw();
   h2->Draw("SAME");
 
   TLegend *legend = new TLegend(0.1, 0.65, 0.3, 0.75);
-  legend->AddEntry(h1, "Left Handed", "f");
-  legend->AddEntry(h2, "Right Handed", "f");
+  legend->AddEntry(h1, "LH Top", "f");
+  legend->AddEntry(h2, "RH Top", "f");
   legend->Draw();
 }
-
