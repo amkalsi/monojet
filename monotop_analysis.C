@@ -32,7 +32,6 @@ Bool_t monotop_analysis::Process(Long64_t entry) {
 
     // Loop over jets and find the leading b-jet.
     for (Int_t i = 0; i < Jet_size; i++) {
-      printf("Jet size: %d ; Btag = %d \n", Jet_size, Jet_BTag[i]);
       if (Jet_BTag[i] == 1 && btag_i < 0) {
         btag_i = i;
       }
@@ -41,7 +40,6 @@ Bool_t monotop_analysis::Process(Long64_t entry) {
     // Loop over muons and find the highest pT muon.
     Double_t muon_pt_max = 0.0;
     for (Int_t i = 0; i < Muon_size; i++) {
-      printf("Muon size: %d ; Muon PT: %d \n", Muon_size, Muon_PT[i]);
       if (Muon_PT[i] > muon_pt_max) {
         muon_i = i;
         muon_pt_max = Muon_PT[i];
