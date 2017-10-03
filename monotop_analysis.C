@@ -63,9 +63,9 @@ Bool_t monotop_analysis::Process(Long64_t entry) {
       muon_eta = Muon_Eta[muon_i];
 
       bool pt_cut = (muon_pT > 33.0 && btag_pT > 70.0);
-      bool delta_phi_cut = (delta_phi < 1.7);
-      bool btag_eta_cut = (btag_eta < 2.5);
-      bool mu_eta_cut = (muon_eta < 2.1);
+      bool delta_phi_cut = (abs(delta_phi) < 1.7);
+      bool btag_eta_cut = (abs(btag_eta) < 2.5);
+      bool mu_eta_cut = (abs(muon_eta) < 2.1);
       bool et_miss_cut = (sum_MissingET > 100.0);
       bool passed_cuts = (delta_phi_cut && pt_cut && mu_eta_cut &&
                           btag_eta_cut && et_miss_cut);
