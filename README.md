@@ -10,8 +10,7 @@ http://uregina.ca/~kolev20n/monotop.html
 ### (1) MadGraph: Feynman diagram generation
 
 We want to generate the following Feynman Diagram:
-![alt text][diag]
-[diag]: https://github.com/athompson-tamu/monojet/tree/master/images/monojet_feyndiagram.png "Monojet with Associated BTag"
+![alt text](https://github.com/athompson-tamu/monojet/blob/master/images/monojet_feyndiagram.png)
 (Figure 1)
 
 
