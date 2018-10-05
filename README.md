@@ -10,7 +10,10 @@ http://uregina.ca/~kolev20n/monotop.html
 ### (1) MadGraph: Feynman diagram generation
 
 We want to generate the following Feynman Diagram:
+
 ![alt text](https://github.com/athompson-tamu/monojet/blob/master/images/monojet_feyndiagram.png)
+
+
 (Figure 1)
 
 
