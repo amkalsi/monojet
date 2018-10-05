@@ -4,7 +4,10 @@ Dark Matter, Neutron-Antineutron Oscillation and Collider Signals](https://arxiv
 * Get the model here:
 http://uregina.ca/~kolev20n/monotop.html
 
-### MadGraph: Feynman diagram generation
+
+##### In the following guide, we will generate Feynman diagrams for a monojet process, simulate proton-proton collisions in the CMS detector using the given BSM interactions, and analyze the data with ROOT.
+
+### (1) MadGraph: Feynman diagram generation
 
 We want to generate the following Feynman Diagram (Figure 1):
 
@@ -21,7 +24,7 @@ MG5_aMC> exit
 This creates a folder called `monojet_with_assoc_btag` containing all the SubProcesses, Cards, and binaries needed for this process. In MG5, the proton carries gluons in its multiparticle definition by default, so you can check that we should have Figure 1 among the diagrams generated (you can `index.html` in a browser, for instance, with `firefox index.html`).
 
 
-### Staging the Event Generation: Cards
+### (2) Staging the Event Generation: Cards
 The first step to take before using MadEvent to simulate LHC collision data using our imported model and generated diagrams is to set the configurations; the configuration for each stage of simulation (MadEvent matrix element Monte Carlo > Pythia shower > Delphes detector simulation) is controlled by a __Card__. All the cards can be read and edited in the `monojet_with_assoc_btag/Cards` folder.
 
 There are primarily 5 Cards to be aware of:
@@ -54,7 +57,7 @@ For the Baryogenesis model we're using, we should fix some masses and couplings 
 ```
 
 
-3. Set the couplings for the ddX Yukawa term as follows, only allowing down-bottom ( \lambda i=1, j=3) interactions;
+3. Set the couplings for the ddX Yukawa term as follows, only allowing down-bottom (i=1, j=3) interactions;
 
 ```
 6 0.000000e+00 # lam1R113
