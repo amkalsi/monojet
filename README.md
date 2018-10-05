@@ -1,5 +1,7 @@
 # monotop
-Get the model here:
+* See the paper: [A Simple Testable Model of Baryon Number Violation: Baryogenesis,
+Dark Matter, Neutron-Antineutron Oscillation and Collider Signals](https://arxiv.org/pdf/1712.02713.pdf)
+* Get the model here:
 http://uregina.ca/~kolev20n/monotop.html
 
 ### MadGraph: Feynman diagram generation
@@ -43,7 +45,7 @@ For the Baryogenesis model we're using, we should fix some masses and couplings 
  6000001 1.000000e+03 # MX1
  6000002 1.000000e+04 # MX2
 ```
-2. Turn on only the righthanded model, controlled by these parameters (1 = ON, 0 = OFF):
+2. Turn on only the righthanded model as follows, controlled by these parameters (0 = OFF):
 
 ```
     1 1.000000e-01 # lam1Norm
@@ -52,7 +54,7 @@ For the Baryogenesis model we're using, we should fix some masses and couplings 
 ```
 
 
-3. Set the couplings for the ddX Yukawa term as follows, only allowing down-bottom (i=1, j=3) interactions;
+3. Set the couplings for the ddX Yukawa term as follows, only allowing down-bottom ( \lambda i=1, j=3) interactions;
 
 ```
 6 0.000000e+00 # lam1R113
