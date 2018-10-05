@@ -25,7 +25,7 @@ Block mass
    25 1.200000e+02 # MH 
   5000001 1.000000e+00 # Mn 
   6000001 1.000000e+03 # MX1 
-  6000002 2.000000e+03 # MX2 
+  6000002 1.000000e+04 # MX2 
 ## Dependent parameters, given by model restrictions.
 ## Those values should be edited following the 
 ## analytical expression. MG5 ignores those values 
@@ -53,19 +53,19 @@ Block np
     3 0.000000e+00 # lam2Left << This is the coupling for the other helicity, like lam2Norm. Same flavor struture.
     4 0.000000e+00 # lam1R111 
     5 0.000000e+00 # lam1R112 
-    6 0.000000e+00 # lam1R113 
+    6 1.000000e+00 # lam1R113 
     7 0.000000e+00 # lam1R121 
     8 0.000000e+00 # lam1R122 
-    9 1.000000e+00 # lam1R123 
+    9 0.000000e+00 # lam1R123 
    10 0.000000e+00 # lam1R131 
    11 0.000000e+00 # lam1R132 
    12 0.000000e+00 # lam1R133 
    13 0.000000e+00 # lam1R211 
    14 0.000000e+00 # lam1R212 
-   15 0.000000e+00 # lam1R213 
+   15 1.000000e+00 # lam1R213 
    16 0.000000e+00 # lam1R221 
    17 0.000000e+00 # lam1R222 
-   18 1.000000e+00 # lam1R223 
+   18 0.000000e+00 # lam1R223 
    19 0.000000e+00 # lam1R231 
    20 0.000000e+00 # lam1R232 
    21 0.000000e+00 # lam1R233 
