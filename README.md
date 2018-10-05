@@ -29,17 +29,18 @@ The first step to take before using MadEvent to simulate LHC collision data usin
 
 There are primarily 5 Cards to be aware of:
 
-1. The __Process Card__ `proc_card_mg5.dat` - Leave as is; you already wrote this card when you did `generate` and `output` commands in the previous step.
-2. The __Run Card__ `run_card.dat` - This Card controlls many things, but primarily you'll want to change
+* The __Process Card__ `proc_card_mg5.dat` - Leave as is; you already wrote this card when you did `generate` and `output` commands in the previous step.
+* The __Run Card__ `run_card.dat` - This Card controlls many things, but primarily you'll want to change
 
-*  `nevents`: Number of collision events. By default `10000 = nevents` which should be a decent choice for now, but as you get deeper into the pheno study you may demand more statistics.
+* *  `nevents`: Number of collision events. By default `10000 = nevents` which should be a decent choice for now, but as you get deeper into the pheno study you may demand more statistics.
 
-*  `use_syst`: change to `False = use_syst` since systematics calculations are initially unnecessary.
+* * `use_syst`: change to `False = use_syst` since systematics calculations are initially unnecessary.
 
-3. The __Pythia Card__ `pythia8_card.dat` (initially `pythia8_card_default.dat`) - Controlls the parameters of the particle shower. Typically this card only gets edited if you need to perform jet matching.
-4. The __Delphes Card__ `delphes_card_CMS.dat` - Leave as-is, but have a peek inside - it is educational to see what parameters of the reconstruction are controlled here.
-5. The __Param Card__: This is where we get to mess around with the laws of physics. All the masses, decay widths, and coupling constants of the Standard Model particles are set in this Card, and if you generated a BSM process by importing a different model, the free parameters of that theory will appear in this Card as well.
+* The __Pythia Card__ `pythia8_card.dat` (initially `pythia8_card_default.dat`) - Controlls the parameters of the particle shower. Typically this card only gets edited if you need to perform jet matching.
+* The __Delphes Card__ `delphes_card_CMS.dat` - Leave as-is, but have a peek inside - it is educational to see what parameters of the reconstruction are controlled here.
+* The __Param Card__: This is where we get to mess around with the laws of physics. All the masses, decay widths, and coupling constants of the Standard Model particles are set in this Card, and if you generated a BSM process by importing a different model, the free parameters of that theory will appear in this Card as well.
 
+#### Setting the Masses and Coupling Constants in the Param Card
 For the Baryogenesis model we're using, we should fix some masses and couplings first;
 
 1. Set the mass of the second scalar X2 to be very large; effectively this will suppress interactions involving X2 to keep the phenomenology simple (and large mass gap is what we would expect from a symmetry breaking perspective anyways). For example, set MX1 = 1 TeV and MX2 = 10 TeV:
