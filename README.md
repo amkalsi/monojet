@@ -75,3 +75,10 @@ For the Baryogenesis model we're using, we should fix some masses and couplings 
 ```
 
 5. Set all the other couplings to zero. You can compare with the premade card link to make sure you set everything correctly.
+
+Now you should be ready to generate your events.
+
+### (3) Event Generation: MadEvent->Pythia8->Delphes
+Every time you do this step, MadEvent will use the configured cards in the /Cards/ folder as they are; so, the only time you will have to go back to step 2 is if you want to edit some of the model parameters, in which case you will have to regenerate your events.
+
+### (4) ROOT Data Analysis
