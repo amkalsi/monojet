@@ -9,7 +9,10 @@ http://uregina.ca/~kolev20n/monotop.html
 
 ### (1) MadGraph: Feynman diagram generation
 
-We want to generate the following Feynman Diagram (Figure 1):
+We want to generate the following Feynman Diagram:
+![alt text][diag]
+[diag]: https://github.com/athompson-tamu/monojet/tree/master/images/monojet_feyndiagram.png "Monojet with Associated BTag"
+(Figure 1)
 
 
 The syntax in MG5 is:
