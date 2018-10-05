@@ -29,7 +29,7 @@ The first step to take before using MadEvent to simulate LHC collision data usin
 
 There are primarily 5 Cards to be aware of:
 
-* The __Process Card__ `proc_card_mg5.dat` - Leave as is; you already wrote this card when you did `generate` and `output` commands in the previous step.
+* The __Process Card__ `proc_card_mg5.dat` - <span style="color:green">Leave as is</span>; you already wrote this card when you did `generate` and `output` commands in the previous step.
 * The __Run Card__ `run_card.dat` - This Card controlls many things, but primarily you'll want to change
 
 * *  `nevents`: Number of collision events. By default `10000 = nevents` which should be a decent choice for now, but as you get deeper into the pheno study you may demand more statistics.
