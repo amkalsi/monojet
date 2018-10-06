@@ -40,6 +40,7 @@ cd baryogen_monojet_with_b/
 ### (2) Prepping the Event Generation: Cards
 ```
 cd Cards/
+ls
 ```
 Before we run MadEvent to simulate collision data using our generated diagrams, we have to configure various things. The set of configuration parameters for each stage of simulation is controlled by a __Card__. All the cards can be read and edited in the `baryogen_monojet_with_b/Cards` folder.
 
@@ -111,6 +112,7 @@ For this process, 10k events took me less than 10 minutes. Once Delphes has fini
 The simulated data for each run is stored in the `Events/` folder:
 ```
 cd Events/dryrun/
+ls
 ```
 * `tag_1_delphes_events.root` : this is the RECO-level ROOT file. Particles have been showered by Pythia and reconstructed with detector response. This data is like what a real detector would see.
 * `unweighted_events.lhe.gz` : GEN-level ROOT file. Particles have not yet been showered yet, just the MadEvent output. This data is what we look at less often to get a theoretical "ground-truth" picture before final state particles decay.
