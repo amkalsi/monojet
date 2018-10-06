@@ -93,7 +93,7 @@ This is where we get to mess around with the laws of physics. All the masses, de
 Now you should be ready to generate your events.
 
 ### (3) Event Generation: MadEvent->Pythia8->Delphes
-Every time you do this step, MadEvent will use the configured cards in the /Cards/ folder as they are; so, the only time you will have to go back to step 2 is if you want to edit some of the model parameters, in which case you will have to regenerate your events.
+Every time you do this step, MadEvent will use the cards in the /Cards/ folder as they are currently saved; so just make sure they are edited the way you want them to be each time MadEvent runs.
 
 1. Launch Madevent:
 ```
@@ -107,6 +107,14 @@ baryogen_monojet_with_b> launch dryrun
 Two prompts will show up. The first prompt asks which programs you would like to run; select Pythia8 and Delphes. The second prompt asks you if you want to edit your Cards any further; if you already edited them in Step __(2)__ then go ahead and press enter - let the event generation begin!
 
 For this process, 10k events took me less than 10 minutes. Once Delphes has finished and the interface command prompt pops up again, you can exit with `baryogen_monojet_with_b> exit`.
+
+The simulated data for each run is stored in the `Events/` folder:
+```
+cd Events/
+cd dryrun/
+```
+* `tag_1_delphes_events.root` : this is the RECO-level ROOT file. Particles have been showered by Pythia and reconstructed with detector response. This data is like what a real detector would see.
+* `unweighted_events.lhe.gz` : GEN-level ROOT file. Particles have not yet been showered yet, just the MadEvent output. This data is what we look at less often to get a theoretical "ground-truth" picture before final state particles decay.
 
 ### (4) ROOT Data Analysis
 
