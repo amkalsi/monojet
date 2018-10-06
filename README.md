@@ -110,8 +110,7 @@ For this process, 10k events took me less than 10 minutes. Once Delphes has fini
 
 The simulated data for each run is stored in the `Events/` folder:
 ```
-cd Events/
-cd dryrun/
+cd Events/dryrun/
 ```
 * `tag_1_delphes_events.root` : this is the RECO-level ROOT file. Particles have been showered by Pythia and reconstructed with detector response. This data is like what a real detector would see.
 * `unweighted_events.lhe.gz` : GEN-level ROOT file. Particles have not yet been showered yet, just the MadEvent output. This data is what we look at less often to get a theoretical "ground-truth" picture before final state particles decay.
