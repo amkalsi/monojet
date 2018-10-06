@@ -56,7 +56,7 @@ This Card controls a broad range of things. The two parameters that you'll most 
 #### Param Card `param_card.dat`
 This is where we get to mess around with the laws of physics. All the masses, decay widths, and coupling constants of the Standard Model particles are set in this Card, and if you generated a BSM process by importing a different model, the free parameters of that theory will appear in this Card as well. For the Baryogenesis model we're using, we should fix some masses and couplings first;
 
-1. Set the mass of the second scalar X2 to be very large; effectively this will suppress interactions involving X2 to keep the phenomenology simple (and large mass gap is what we would expect from a symmetry breaking perspective anyways). For example, set MX1 = 1 TeV and MX2 = 10 TeV:
+1. Set the mass of the second scalar X2 to be very large; effectively this will suppress interactions involving X2 to keep the phenomenology simple (and large mass gap is what we would expect from a symmetry breaking perspective anyways). For example, leave the DM at 1 GeV and set MX1 = 1 TeV and MX2 = 10 TeV:
 
 ```
   5000001 1.000000e+00 # Mn
