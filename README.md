@@ -61,14 +61,14 @@ This is where we get to mess around with the laws of physics. All the masses, de
 ```
   5000001 1.000000e+00 # Mn
   6000001 1.000000e+03 # MX1
-  6000002 2.000000e+04 # MX2
+  6000002 1.000000e+04 # MX2
 ```
 2. Turn on only the righthanded model as follows, controlled by these parameters (0 = OFF):
 
 ```
-    1 1.000000e-01 # lam1Norm
-    2 1.000000e-01 # lam2Norm
-    3 0.000000e+00 # lam2Left << This is the coupling for the other helicity, like lam2Norm. Same flavor struture.
+    1 1.000000e-01 # lam1Norm << overall normalization
+    2 1.000000e-01 # lam2Norm << RH coupling
+    3 0.000000e+00 # lam2Left << LH coupling
 ```
 
 
