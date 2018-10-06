@@ -110,6 +110,7 @@ Two prompts will show up. The first prompt asks which programs you would like to
 For this process, 10k events took me less than 10 minutes. Once Delphes has finished and the interface command prompt pops up again, you can exit with `baryogen_monojet_with_b> exit`.
 
 ### (4) ROOT Analysis
+The first goal of our analysis is to reproduce the distributions on slide 4 in this [pheno overview talk](https://github.com/athompson-tamu/monojet/blob/master/180828_Qatar_Pheno_Project.pdf).
 
 The simulated data for each run is stored in the `Events/` folder:
 ```
