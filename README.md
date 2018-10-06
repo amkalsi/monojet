@@ -41,7 +41,7 @@ cd baryogen_monojet_with_b/
 ```
 cd Cards/
 ```
-The first step to take before using MadEvent to simulate LHC collision data using our imported model and generated diagrams is to set the configurations; the configuration for each stage of simulation (MadEvent matrix element Monte Carlo > Pythia shower > Delphes detector simulation) is controlled by a __Card__. All the cards can be read and edited in the `baryogen_monojet_with_b/Cards` folder.
+Before we run MadEvent to simulate collision data using our generated diagrams, we have to configure various things. The set of configuration parameters for each stage of simulation is controlled by a __Card__. All the cards can be read and edited in the `baryogen_monojet_with_b/Cards` folder.
 
 There are two primary Cards we want to edit, `run_card.dat` and `param_card.dat`. `pythia8_card.dat` and `delphes_card_CMS.dat` are worth having a look at sometime, as they can be relevant for other pheno work.
 
