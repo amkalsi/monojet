@@ -2,7 +2,7 @@
 * See the paper: [A Simple Testable Model of Baryon Number Violation: Baryogenesis,
 Dark Matter, Neutron-Antineutron Oscillation and Collider Signals](https://arxiv.org/pdf/1712.02713.pdf)
 * Get the model here:
-http://uregina.ca/~kolev20n/monotop.html
+https://github.com/athompson-tamu/monojet/blob/master/BaryogenX2N1Maj_withLeft.tar.gz
 
 <p align="center">
   <img src="https://github.com/athompson-tamu/monojet/blob/master/images/lagrangian.PNG">
