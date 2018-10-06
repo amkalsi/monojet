@@ -22,7 +22,7 @@ The syntax in MG5 is:
 MG5_aMC> import model BaryogenX2N1Maj_withLeft
 MG5_aMC> define bot = b b~
 MG5_aMC> define x = x1 x1~ x2 x2~
-MG5_aMC> generate p p > x bot, x > n j bot
+MG5_aMC> generate p p > x bot, x > n j
 MG5_aMC> output monojet_with_assoc_btag
 MG5_aMC> exit
 ```
