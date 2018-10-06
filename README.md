@@ -9,7 +9,7 @@ http://uregina.ca/~kolev20n/monotop.html
 
 ### (1) MadGraph: Feynman diagram generation
 
-We want to generate the following Feynman Diagram:
+Using the model linked above, we want to generate feynman diagrams for the final state (*N*,*u*,*b*) where *N* is the dark matter (DM), *u* is a light jet, and *b* is a BTagged jet. We specifically want the following diagram to be the dominate production mode among the diagrams generated:
 
 ![alt text](https://github.com/athompson-tamu/monojet/blob/master/images/monojet_feyndiagram.png)
 
@@ -17,7 +17,7 @@ We want to generate the following Feynman Diagram:
 (Figure 1)
 
 
-The syntax in MG5 is:
+The best representative syntax in MG5 for the diagram in Figure 1 is:
 ```
 MG5_aMC> import model BaryogenX2N1Maj_withLeft
 MG5_aMC> define bot = b b~
