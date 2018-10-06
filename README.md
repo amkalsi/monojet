@@ -46,7 +46,7 @@ Before we run MadEvent to simulate collision data using our generated diagrams, 
 There are two primary Cards we want to edit, `run_card.dat` and `param_card.dat`. `pythia8_card.dat` and `delphes_card_CMS.dat` are worth having a look at sometime, as they can be relevant for other pheno work.
 
 #### Run Card `run_card.dat`
- - This Card controls a broad range of things. The two default values you'll want to care about are:
+This Card controls a broad range of things. The two parameters that you'll most often want to change from their defaults are:
 
 1.  `nevents`: Number of collision events. By default `10000 = nevents` which should be a decent choice for now, but as you get deeper into the pheno study you may demand more statistics.
 
