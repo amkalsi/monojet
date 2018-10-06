@@ -1,4 +1,4 @@
-# monojet: A Baryon Number Violating Model @ the LHC
+# monojet @ the LHC: A Baryon Number Violating Model
 * See the paper: [A Simple Testable Model of Baryon Number Violation: Baryogenesis,
 Dark Matter, Neutron-Antineutron Oscillation and Collider Signals](https://arxiv.org/pdf/1712.02713.pdf)
 * Get the model here:
