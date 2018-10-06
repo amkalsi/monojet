@@ -4,16 +4,19 @@ Dark Matter, Neutron-Antineutron Oscillation and Collider Signals](https://arxiv
 * Get the model here:
 http://uregina.ca/~kolev20n/monotop.html
 
-![alt_text](https://github.com/athompson-tamu/monojet/blob/master/images/lagrangian.PNG)
+<p align="center">
+  <img src="https://github.com/athompson-tamu/monojet/blob/master/images/lagrangian.PNG">
+</p>
+
 ##### In the following guide, we will generate Feynman diagrams for a monojet process, simulate proton-proton collisions in the CMS detector using the given BSM interactions, and analyze the data with ROOT.
 
 ### (1) MadGraph: Drawing the Feynman Diagrams
 
 Using the model linked above, we want MG5 to draw all the feynman diagrams for the final state (*N*,*u*,*b*) where *N* is the dark matter (DM), *u* is a light jet, and *b* is a BTagged jet. We specifically want the following diagram to be the dominate production mode among the diagrams generated:
 
-![alt text](https://github.com/athompson-tamu/monojet/blob/master/images/monojet_feyndiagram.png)
-
-
+<p align="center">
+  <img src="https://github.com/athompson-tamu/monojet/blob/master/images/monojet_feyndiagram.png">
+</p>
 (Figure 1)
 
 
