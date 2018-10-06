@@ -1,8 +1,8 @@
 # monojet @ the LHC: A Baryon Number Violating Model
 * See the paper: [A Simple Testable Model of Baryon Number Violation: Baryogenesis,
 Dark Matter, Neutron-Antineutron Oscillation and Collider Signals](https://arxiv.org/pdf/1712.02713.pdf)
-* Get the model here:
-https://github.com/athompson-tamu/monojet/blob/master/BaryogenX2N1Maj_withLeft.tar.gz
+* Get the model here: [BaryogenX2N1Maj_withLeft.tar.gz](https://github.com/athompson-tamu/monojet/blob/master/BaryogenX2N1Maj_withLeft.tar.gz) and untar it in your `<MG5_directory>/models/` folder.
+
 
 <p align="center">
   <img src="https://github.com/athompson-tamu/monojet/blob/master/images/lagrangian.PNG">
