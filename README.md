@@ -7,9 +7,9 @@ http://uregina.ca/~kolev20n/monotop.html
 
 ##### In the following guide, we will generate Feynman diagrams for a monojet process, simulate proton-proton collisions in the CMS detector using the given BSM interactions, and analyze the data with ROOT.
 
-### (1) MadGraph: Feynman diagram generation
+### (1) MadGraph: Drawing the Feynman Diagrams
 
-Using the model linked above, we want to generate feynman diagrams for the final state (*N*,*u*,*b*) where *N* is the dark matter (DM), *u* is a light jet, and *b* is a BTagged jet. We specifically want the following diagram to be the dominate production mode among the diagrams generated:
+Using the model linked above, we want MG5 to draw all the feynman diagrams for the final state (*N*,*u*,*b*) where *N* is the dark matter (DM), *u* is a light jet, and *b* is a BTagged jet. We specifically want the following diagram to be the dominate production mode among the diagrams generated:
 
 ![alt text](https://github.com/athompson-tamu/monojet/blob/master/images/monojet_feyndiagram.png)
 
@@ -23,15 +23,22 @@ MG5_aMC> import model BaryogenX2N1Maj_withLeft
 MG5_aMC> define bot = b b~
 MG5_aMC> define x = x1 x1~ x2 x2~
 MG5_aMC> generate p p > x bot, x > n j
-MG5_aMC> output monojet_with_assoc_btag
+MG5_aMC> output baryogen_monojet_with_b
 MG5_aMC> exit
 ```
 
-This creates a folder called `monojet_with_assoc_btag` containing all the SubProcesses, Cards, and binaries needed for this process. In MG5, the proton carries gluons in its multiparticle definition by default, so you can check that we should have Figure 1 among the diagrams generated (you can `index.html` in a browser, for instance, with `firefox index.html`).
+This creates a folder called `baryogen_monojet_with_b` containing all the materials for this process. Enter the folder.
+
+```
+cd baryogen_monojet_with_b/
+```
 
 
-### (2) Staging the Event Generation: Cards
-The first step to take before using MadEvent to simulate LHC collision data using our imported model and generated diagrams is to set the configurations; the configuration for each stage of simulation (MadEvent matrix element Monte Carlo > Pythia shower > Delphes detector simulation) is controlled by a __Card__. All the cards can be read and edited in the `monojet_with_assoc_btag/Cards` folder.
+### (2) Prepping the Event Generation: Cards
+```
+cd Cards/
+```
+The first step to take before using MadEvent to simulate LHC collision data using our imported model and generated diagrams is to set the configurations; the configuration for each stage of simulation (MadEvent matrix element Monte Carlo > Pythia shower > Delphes detector simulation) is controlled by a __Card__. All the cards can be read and edited in the `baryogen_monojet_with_b/Cards` folder.
 
 There are primarily 5 Cards to be aware of:
 
@@ -52,8 +59,9 @@ For the Baryogenesis model we're using, we should fix some masses and couplings 
 1. Set the mass of the second scalar X2 to be very large; effectively this will suppress interactions involving X2 to keep the phenomenology simple (and large mass gap is what we would expect from a symmetry breaking perspective anyways). For example, set MX1 = 1 TeV and MX2 = 10 TeV:
 
 ```
- 6000001 1.000000e+03 # MX1
- 6000002 1.000000e+04 # MX2
+  5000001 1.000000e+00 # Mn
+  6000001 1.000000e+03 # MX1
+  6000002 2.000000e+04 # MX2
 ```
 2. Turn on only the righthanded model as follows, controlled by these parameters (0 = OFF):
 
@@ -88,4 +96,18 @@ Now you should be ready to generate your events.
 ### (3) Event Generation: MadEvent->Pythia8->Delphes
 Every time you do this step, MadEvent will use the configured cards in the /Cards/ folder as they are; so, the only time you will have to go back to step 2 is if you want to edit some of the model parameters, in which case you will have to regenerate your events.
 
+1. Launch Madevent:
+```
+cd ../
+./bin/madevent
+```
+2. The MadEvent interface will show up, and to begin just type `launch <run_name>`;
+```
+baryogen_monojet_with_b> launch dryrun
+```
+Two prompts will show up. The first prompt asks which programs you would like to run; select Pythia8 and Delphes. The second prompt asks you if you want to edit your Cards any further; if you already edited them in Step __(2)__ then go ahead and press enter - let the event generation begin!
+
+For this process, 10k events took me less than 10 minutes. Once Delphes has finished and the interface command prompt pops up again, you can exit with `baryogen_monojet_with_b> exit`.
+
 ### (4) ROOT Data Analysis
+
