@@ -81,7 +81,7 @@ For the Baryogenesis model we're using, we should fix some masses and couplings 
    44 1.000000e+00 # lam2R22
 ```
 
-5. Set all the other couplings to zero. You can compare with the premade card link to make sure you set everything correctly.
+5. Set all the other couplings to zero. You can compare with [this premade card](https://github.com/athompson-tamu/monojet/blob/master/cards/param_card_right_mod.dat) to make sure you set everything correctly.
 
 Now you should be ready to generate your events.
 
