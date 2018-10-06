@@ -109,6 +109,8 @@ Two prompts will show up. The first prompt asks which programs you would like to
 
 For this process, 10k events took me less than 10 minutes. Once Delphes has finished and the interface command prompt pops up again, you can exit with `baryogen_monojet_with_b> exit`.
 
+### (4) ROOT Analysis
+
 The simulated data for each run is stored in the `Events/` folder:
 ```
 cd Events/dryrun/
@@ -117,5 +119,9 @@ ls
 * `tag_1_delphes_events.root` : this is the RECO-level ROOT file. Particles have been showered by Pythia and reconstructed with detector response. This data is like what a real detector would see.
 * `unweighted_events.lhe.gz` : GEN-level ROOT file. Particles have not yet been showered yet, just the MadEvent output. This data is what we look at less often to get a theoretical "ground-truth" picture before final state particles decay.
 
-### (4) ROOT Data Analysis
+These two `.root` files can be analyzed with ROOT macros written in C/C++. If you're new to writing macros for ROOT, or new to the Delphes/LHEF libraries, I would refer you to [this example for Delphes TTree analysis](https://cp3.irmp.ucl.ac.be/projects/delphes/wiki/WorkBook/QuickTour). You can also use the tool [MakeSelector](https://root.cern.ch/developing-tselector) to write a macro with automatically generated header file full of populated TTree classes, but IMO it is neither pedagogical nor versatile compared to the traditional aforementioned examples.
+
+You can also check out
+* my past [macros for monotop](https://github.com/athompson-tamu/monojet/tree/master/macros) in this repo.
+* macros and tools used for [Zprime analysis](https://github.com/athompson-tamu/zprime/tree/master).
 
