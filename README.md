@@ -75,10 +75,10 @@ This is where we get to mess around with the laws of physics. All the masses, de
 3. Set the couplings for the ddX Yukawa term as follows, only allowing down-bottom (i=1, j=3) interactions;
 
 ```
-6 0.000000e+00 # lam1R113
+6 1.000000e+00 # lam1R113
 ```
 ```
-15 0.000000e+00 # lam1R213
+15 1.000000e+00 # lam1R213
 ```
 4. Next, set the couplings for the unX Yukawa term such that we only have i=1,2 (up, charm) interactions; this keeps the quarks pair produced with the dark matter light so as to not confuse them with our associated bottom jet in the process.
 ```
@@ -87,6 +87,7 @@ This is where we get to mess around with the laws of physics. All the masses, de
    42 0.000000e+00 # lam2R13
    43 1.000000e+00 # lam2R21
    44 1.000000e+00 # lam2R22
+   45 0.000000e+00 # lam2R23
 ```
 
 5. Set all the other couplings to zero. You can compare with [this premade card](https://github.com/athompson-tamu/monojet/blob/master/cards/param_card_right_mod.dat) to make sure you set everything correctly.
